@@ -1,0 +1,44 @@
+import { portfolio } from "@/config/portfolio"
+import Image from "@/components/Image"
+import GithubIcon from "@/components/GithubIcon"
+import { ArrowUpRight, Code2, Laptop, NotebookPen, Sparkles } from "lucide-react"
+
+export const metadata = { title: "O mnie" }
+
+# O mnie
+
+<section className="motion-fade-up grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_14rem]">
+<div className="min-w-0">
+
+Nazywam się {portfolio.name} i tworzę aplikacje oraz narzędzia.
+
+Moją największą pasją jest programowanie.
+Programuję głównie w językach Python i JavaScript.
+Interesuję się tworzeniem aplikacji, nowymi technologiami
+oraz rozwijaniem własnych umiejętności. Najczęściej tworzę
+narzędzia i aplikacje rozwiązujące konkretne problemy.
+
+Lubię uczyć się nowych rzeczy i sprawdzać,
+jak można wykorzystać wiedzę w praktyce.
+
+</div>
+<Image slot="profile" alt="Portret Sviatoslava Melnyka" aspect="square" />
+</section>
+
+---
+
+## Co potrafię i czym się interesuję?
+
+<div className="motion-stagger grid gap-3 sm:grid-cols-2">
+  <div className="motion-card flex items-center gap-3 rounded-xl border border-border bg-card p-4"><Code2 className="size-5 text-muted-foreground" /><span>Tworzenie narzędzi i aplikacji</span></div>
+  <div className="motion-card flex items-center gap-3 rounded-xl border border-border bg-card p-4"><Sparkles className="size-5 text-muted-foreground" /><span>Poznawanie nowych technologii</span></div>
+  <div className="motion-card flex items-center gap-3 rounded-xl border border-border bg-card p-4"><Laptop className="size-5 text-muted-foreground" /><span>Python, JavaScript, Java i Kotlin</span></div>
+  <div className="motion-card flex items-center gap-3 rounded-xl border border-border bg-card p-4"><NotebookPen className="size-5 text-muted-foreground" /><span>Obsidian</span></div>
+  <div className="motion-card flex items-center gap-3 rounded-xl border border-border bg-card p-4"><GithubIcon className="size-5 dark:invert" /><span>Otwarte projekty</span></div>
+</div>
+
+## Moje konto GitHub
+
+<a className="inline-flex items-center gap-2 underline-offset-4 hover:underline" href="https://github.com/slavkomelnyk" target="_blank" rel="noreferrer">
+  <GithubIcon />Zobacz moje repozytoria na GitHubie<ArrowUpRight className="size-4" />
+</a>
