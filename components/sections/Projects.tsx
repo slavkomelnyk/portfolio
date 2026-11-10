@@ -14,7 +14,7 @@ const toneOf = (name: string): BadgeTone => techStack.find((t) => t.name === nam
 
 export default function Projects() {
   return (
-    <Carousel opts={{ align: "start" }} aria-label="Moje projekty">
+    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label="Moje projekty">
       <CarouselContent>
         {projects.map((p) => (
           <CarouselItem key={p.title} className="md:basis-1/2">

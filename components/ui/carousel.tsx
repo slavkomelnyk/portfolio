@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
 import { cn } from "cn"
 import { Button } from "@/components/ui/button"
@@ -27,13 +28,23 @@ function useCarousel() {
 
 function Carousel({
   opts,
+  autoplay,
   className,
   children,
   ...props
 }: React.ComponentProps<"div"> & {
   opts?: Parameters<typeof useEmblaCarousel>[0]
+  /** Delay between automatic slides in ms. Pauses while the mouse is over the carousel or it has focus. */
+  autoplay?: number
 }) {
-  const [carouselRef, api] = useEmblaCarousel({ align: "start", ...opts })
+  const plugins = React.useMemo(
+    () =>
+      autoplay
+        ? [Autoplay({ delay: autoplay, stopOnInteraction: false, stopOnMouseEnter: true, stopOnFocusIn: true })]
+        : [],
+    [autoplay]
+  )
+  const [carouselRef, api] = useEmblaCarousel({ align: "start", ...opts }, plugins)
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)
 
