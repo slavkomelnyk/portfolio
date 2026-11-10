@@ -39,19 +39,23 @@ export const statuses = [
 export type Tech = {
   name: string;
   href: string;
-  tone: "python" | "javascript" | "java" | "kotlin" | "obsidian" | "django" | "android" | "synology";
+  tone: "python" | "javascript" | "typescript" | "tailwind" | "bootstrap" | "java" | "kotlin" | "obsidian" | "django" | "android" | "docker" | "synology";
   hint: string;
 };
 
 export const techStack: Tech[] = [
-  { name: "Python", href: "https://python.org/", tone: "python", hint: "Strona Pythona" },
-  { name: "JavaScript", href: "https://developer.mozilla.org/docs/Web/JavaScript", tone: "javascript", hint: "MDN: JavaScript" },
-  { name: "Java", href: "https://docs.oracle.com/en/java/", tone: "java", hint: "Dokumentacja Javy" },
-  { name: "Kotlin", href: "https://kotlinlang.org/", tone: "kotlin", hint: "Strona Kotlina" },
-  { name: "Obsidian", href: "https://help.obsidian.md/", tone: "obsidian", hint: "Pomoc Obsidiana" },
-  { name: "Django", href: "https://docs.djangoproject.com/", tone: "django", hint: "Dokumentacja Django" },
-  { name: "Android", href: "https://developer.android.com/docs", tone: "android", hint: "Android Developers" },
-  { name: "Synology", href: "https://kb.synology.com/", tone: "synology", hint: "Baza wiedzy Synology" },
+  { name: "Python", href: "https://www.python.org/", tone: "python", hint: "Oficjalna strona Pythona" },
+  { name: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript", tone: "javascript", hint: "MDN: JavaScript" },
+  { name: "TypeScript", href: "https://www.typescriptlang.org/", tone: "typescript", hint: "Oficjalna strona TypeScripta" },
+  { name: "Bootstrap", href: "https://getbootstrap.com/", tone: "bootstrap", hint: "Oficjalna strona Bootstrapa" },
+  { name: "Tailwind", href: "https://tailwindcss.com/", tone: "tailwind", hint: "Oficjalna strona Tailwind CSS" },
+  { name: "Java", href: "https://www.java.com/", tone: "java", hint: "Oficjalna strona Javy" },
+  { name: "Kotlin", href: "https://kotlinlang.org/", tone: "kotlin", hint: "Oficjalna strona Kotlina" },
+  { name: "Obsidian", href: "https://obsidian.md/", tone: "obsidian", hint: "Oficjalna strona Obsidiana" },
+  { name: "Django", href: "https://www.djangoproject.com/", tone: "django", hint: "Oficjalna strona Django" },
+  { name: "Android", href: "https://www.android.com/", tone: "android", hint: "Oficjalna strona systemu Android" },
+  { name: "Synology", href: "https://www.synology.com/", tone: "synology", hint: "Oficjalna strona Synology" },
+  { name: "Docker", href: "https://www.docker.com/", tone: "docker", hint: "Oficjalna strona Dockera" }
 ];
 
 /**
@@ -91,7 +95,7 @@ export const projects: Project[] = [
     kind: "Wtyczka Obsidiana",
     image: "/images/projects/camera.png",
     description:
-      "Wtyczka do Obsidiana, która umożliwia robienie zdjęć i dodawanie ich do notatek w kilku kliknięciach.",
+      "Wtyczka do Obsidiana, która umożliwia robienie zdjęć i dodawanie ich do notatek w kilku kliknięciach i kompresowanie ich.",
     repo: "https://github.com/slavkomelnyk/camera-embed",
     obsidian_marketplace: "https://community.obsidian.md/plugins/camera-embed",
     obsidianId: "camera-embed",
@@ -103,7 +107,7 @@ export const projects: Project[] = [
     kind: "Aplikacja Android TV",
     image: "/images/projects/tv.png",
     description:
-      "Aplikacja na Android TV, która ułatwia mojej młodszej siostrze uruchamianie lekcji. Obsługuje nawigację pilotem, odtwarzanie wideo i własne menu sterowania.",
+      "Aplikacja na Android TV, która ułatwia mojej młodszej siostrze uruchamianie lekcji. Obsługuje nawigację pilotem, odtwarzanie wideo i własne menu sterowania video.",
     repo: "https://github.com/slavkomelnyk/school-ahead-tv",
     stats: { stars: "github-stars", downloads: "github-releases" },
     tags: ["Kotlin", "Android", "Java"],
@@ -113,9 +117,9 @@ export const projects: Project[] = [
     kind: "Aplikacja webowa",
     image: "/images/projects/shop.png",
     description:
-      "Prosty sklep internetowy dla dzieci, uruchamiany na domowym serwerze Synology NAS.",
+      "Prosty sklep internetowy dla dzieci stworzony w Django, wyposażony w system logowania, komentarzy i ocen oraz interfejs w Bootstrapie. Uruchamiany w Dockerze na serwerze Synology NAS.",
     repo: "https://github.com/slavkomelnyk/shoper-main",
     stats: { stars: "github-stars" },
-    tags: ["Python", "Django", "Synology"],
+    tags: ["Python", "Django", "Bootstrap", "Docker", "Synology"],
   },
 ];

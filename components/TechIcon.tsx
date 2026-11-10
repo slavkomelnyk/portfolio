@@ -1,7 +1,8 @@
 import {
-  SiAndroid, SiDjango, SiJavascript, SiKotlin, SiObsidian, SiOpenjdk, SiPython, SiSynology,
+  SiAndroid, SiBootstrap, SiDjango, SiDocker, SiJavascript, SiKotlin, SiObsidian, SiOpenjdk, SiPython, SiSynology, SiTailwindcss, SiTypescript
 } from "react-icons/si";
 import type { ComponentType } from "react";
+import { BsBootstrap } from "react-icons/bs";
 
 const icons: Record<string, { Icon: ComponentType<{ className?: string }>; color: string }> = {
   Python: { Icon: SiPython, color: "text-sky-400" },
@@ -12,6 +13,10 @@ const icons: Record<string, { Icon: ComponentType<{ className?: string }>; color
   Django: { Icon: SiDjango, color: "text-emerald-400" },
   Android: { Icon: SiAndroid, color: "text-green-600 dark:text-green-400" },
   Synology: { Icon: SiSynology, color: "text-blue-400" },
+  TypeScript: { Icon: SiTypescript, color: "text-blue-500" },
+  Tailwind: { Icon: SiTailwindcss, color: "text-cyan-400" },
+  Docker: { Icon: SiDocker, color: "text-sky-500" },
+  Bootstrap: { Icon: BsBootstrap, color: "text-purple-500" },
 };
 
 export default function TechIcon({ name }: { name: string }) {
