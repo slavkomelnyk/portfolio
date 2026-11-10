@@ -54,7 +54,38 @@ export const techStack: Tech[] = [
   { name: "Synology", href: "https://kb.synology.com/", tone: "synology", hint: "Baza wiedzy Synology" },
 ];
 
-export const projects = [
+/**
+ * Where a project statistic comes from:
+ *  - a number            -> shown as-is (edit it by hand)
+ *  - "github-stars"      -> stargazers of `repo` (GitHub API, fetched in the visitor's browser)
+ *  - "github-releases"   -> sum of downloads of all release assets of `repo`
+ *  - "obsidian-downloads"-> downloads of the plugin `obsidianId` from Obsidian's public stats
+ *  - omitted             -> not shown
+ * API values are fetched client-side on every page load (cached in localStorage for STATS_CACHE_MINUTES).
+ */
+export type Stat = number | "github-stars" | "github-releases" | "obsidian-downloads";
+
+export type Project = {
+  title: string;
+  kind: string;
+  image: string;
+  description: string;
+  repo: string;
+  /** Link to the Obsidian community plugins page (optional). */
+  obsidian_marketplace?: string;
+  /** Plugin id from manifest.json; needed for "obsidian-downloads". */
+  obsidianId?: string;
+  stats?: { stars?: Stat; installs?: Stat; downloads?: Stat };
+  tags: string[];
+};
+
+/** How long fetched statistics are reused from localStorage (protects GitHub's 60 requests/hour/IP limit). */
+export const STATS_CACHE_MINUTES = 60;
+
+/** Hide a statistic whose value is 0 (e.g. an app nobody has downloaded yet). */
+export const HIDE_ZERO_STATS = true;
+
+export const projects: Project[] = [
   {
     title: "Camera Embed",
     kind: "Wtyczka Obsidiana",
@@ -62,6 +93,9 @@ export const projects = [
     description:
       "Wtyczka do Obsidiana, która umożliwia robienie zdjęć i dodawanie ich do notatek w kilku kliknięciach.",
     repo: "https://github.com/slavkomelnyk/camera-embed",
+    obsidian_marketplace: "https://community.obsidian.md/plugins/camera-embed",
+    obsidianId: "camera-embed",
+    stats: { stars: "github-stars", downloads: "obsidian-downloads" },
     tags: ["JavaScript", "Obsidian"],
   },
   {
@@ -71,6 +105,7 @@ export const projects = [
     description:
       "Aplikacja na Android TV, która ułatwia mojej młodszej siostrze uruchamianie lekcji. Obsługuje nawigację pilotem, odtwarzanie wideo i własne menu sterowania.",
     repo: "https://github.com/slavkomelnyk/school-ahead-tv",
+    stats: { stars: "github-stars", downloads: "github-releases" },
     tags: ["Kotlin", "Android", "Java"],
   },
   {
@@ -80,6 +115,7 @@ export const projects = [
     description:
       "Prosty sklep internetowy dla dzieci, uruchamiany na domowym serwerze Synology NAS.",
     repo: "https://github.com/slavkomelnyk/shoper-main",
+    stats: { stars: "github-stars" },
     tags: ["Python", "Django", "Synology"],
   },
-] as const;
+];

@@ -1,11 +1,12 @@
 import NextImage from "next/image";
 import { LuArrowUpRight } from "react-icons/lu";
-import { SiGithub } from "react-icons/si";
+import { SiGithub, SiObsidian } from "react-icons/si";
 import { Badge, type BadgeTone } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
 } from "@/components/ui/carousel";
+import ProjectStats from "@/components/ProjectStats";
 import TechIcon from "@/components/TechIcon";
 import { projects, techStack } from "@/config/portfolio";
 import { asset } from "@/lib/assets";
@@ -34,6 +35,7 @@ export default function Projects() {
               </CardHeader>
               <CardContent className="flex flex-1 flex-col gap-4">
                 <p className="flex-1 text-sm leading-6 text-muted-foreground">{p.description}</p>
+                <ProjectStats project={p} />
                 <div className="flex flex-wrap gap-2">
                   {p.tags.map((tag) => (
                     <Badge key={tag} tone={toneOf(tag)}>
@@ -42,16 +44,30 @@ export default function Projects() {
                     </Badge>
                   ))}
                 </div>
-                <a
-                  href={p.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm underline-offset-4 hover:underline"
-                >
-                  <SiGithub className="size-4" aria-hidden="true" />
-                  GitHub Repo
-                  <LuArrowUpRight className="size-3.5" aria-hidden="true" />
-                </a>
+                <div className="flex flex-wrap gap-x-5 gap-y-2">
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 text-sm underline-offset-4 hover:underline"
+                  >
+                    <SiGithub className="size-4" aria-hidden="true" />
+                    GitHub Repo
+                    <LuArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
+                  {p.obsidian_marketplace && (
+                    <a
+                      href={p.obsidian_marketplace}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-sm underline-offset-4 hover:underline"
+                    >
+                      <SiObsidian className="size-4 text-violet-400" aria-hidden="true" />
+                      Obsidian Marketplace
+                      <LuArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </CarouselItem>
