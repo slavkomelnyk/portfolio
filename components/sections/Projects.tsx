@@ -1,3 +1,5 @@
+"use client";
+
 import NextImage from "next/image";
 import { LuArrowUpRight } from "react-icons/lu";
 import { SiGithub, SiObsidian } from "react-icons/si";
@@ -10,31 +12,33 @@ import ProjectStats from "@/components/ProjectStats";
 import TechIcon from "@/components/TechIcon";
 import { projects, techStack } from "@/config/portfolio";
 import { asset } from "@/lib/assets";
+import { useLocale } from "@/components/LocaleProvider";
 
 const toneOf = (name: string): BadgeTone => techStack.find((t) => t.name === name)?.tone ?? "neutral";
 
 export default function Projects() {
+  const { t, l } = useLocale();
   return (
-    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label="Moje projekty">
+    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label={t.projectsLabel}>
       <CarouselContent>
         {projects.map((p) => (
-          <CarouselItem key={p.title} className="md:basis-1/2">
+          <CarouselItem key={p.id} className="md:basis-1/2">
             <Card className="h-full rounded-3xl transition-transform duration-200 hover:scale-[1.02]">
               <div className="mx-5 aspect-square max-h-56 self-center">
                 <NextImage
                   src={asset(p.image)}
-                  alt={`Ikona projektu ${p.title}`}
+                  alt={`${t.projectIconAlt}: ${l.projects[p.id].title}`}
                   width={400}
                   height={400}
                   className="size-full object-contain"
                 />
               </div>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">{p.title}</CardTitle>
-                <CardDescription>{p.kind}</CardDescription>
+                <CardTitle className="text-lg font-semibold">{l.projects[p.id].title}</CardTitle>
+                <CardDescription>{l.projects[p.id].kind}</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col gap-4">
-                <p className="flex-1 text-sm leading-6 text-muted-foreground">{p.description}</p>
+                <p className="flex-1 text-sm leading-6 text-muted-foreground">{l.projects[p.id].description}</p>
                 <ProjectStats project={p} />
                 <div className="flex flex-wrap gap-2">
                   {p.tags.map((tag) => (
@@ -73,8 +77,8 @@ export default function Projects() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious label={t.carouselPrev} />
+      <CarouselNext label={t.carouselNext} />
     </Carousel>
   );
 }

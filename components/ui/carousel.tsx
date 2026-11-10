@@ -116,7 +116,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CarouselPrevious({ className, ...props }: React.ComponentProps<typeof Button>) {
+function CarouselPrevious({ className, label = "Previous slide", ...props }: React.ComponentProps<typeof Button> & { label?: string }) {
   const { scrollPrev, canScrollPrev } = useCarousel()
   return (
     <Button
@@ -131,12 +131,12 @@ function CarouselPrevious({ className, ...props }: React.ComponentProps<typeof B
       {...props}
     >
       <LuArrowLeft />
-      <span className="sr-only">Poprzedni projekt</span>
+      <span className="sr-only">{label}</span>
     </Button>
   )
 }
 
-function CarouselNext({ className, ...props }: React.ComponentProps<typeof Button>) {
+function CarouselNext({ className, label = "Next slide", ...props }: React.ComponentProps<typeof Button> & { label?: string }) {
   const { scrollNext, canScrollNext } = useCarousel()
   return (
     <Button
@@ -151,7 +151,7 @@ function CarouselNext({ className, ...props }: React.ComponentProps<typeof Butto
       {...props}
     >
       <LuArrowRight />
-      <span className="sr-only">Następny projekt</span>
+      <span className="sr-only">{label}</span>
     </Button>
   )
 }

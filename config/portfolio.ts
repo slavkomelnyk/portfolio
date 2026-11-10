@@ -1,4 +1,5 @@
 import { prefix } from "@/config/main";
+import type { ProjectId, StatusId, TechName } from "@/localization/types";
 
 export const portfolio = {
   name: "Sviatoslav Melnyk",
@@ -15,47 +16,47 @@ export const portfolio = {
 /** How long a status stays before auto-advancing to the next one (ms). */
 export const STATUS_INTERVAL_MS = 10_000;
 
-export const statuses = [
+export type Status = { id: StatusId; image: string; json: Record<string, string> };
+
+/** Texts (label, alt) live in localization/<lang>/statuses.ts. */
+export const statuses: Status[] = [
   {
-    label: "Relaks & Inspiracja",
+    id: "relaxing",
     image: prefix + "/images/status/relaxing.png",
-    alt: "Sviatoslav relaksuje się w fotelu",
-    json: { status: "Relaxed", coffee: "Consumed", next_move: "Build something cool after a break" },
+    json: { status: "Relaxed", tea: "Consumed", next_move: "Build something cool after a break" },
   },
   {
-    label: "Praca nad projektem",
+    id: "working",
     image: prefix + "/images/status/working.png",
-    alt: "Sviatoslav pracuje nad projektem",
-    json: { status: "Coding", coffee: "In progress", next_move: "Ship the next feature" },
+    json: { status: "Coding", tea: "In progress", next_move: "Develop the next feature" },
   },
   {
-    label: "Planowanie nowego pomysłu",
+    id: "thinking",
     image: prefix + "/images/status/thinking.png",
-    alt: "Sviatoslav planuje nowy pomysł",
-    json: { status: "Planning", coffee: "Refilled", next_move: "Sketch the next big idea" },
+    json: { status: "Planning", tea: "Refilled", next_move: "Sketch the next big idea" },
   },
-] as const;
+];
 
 export type Tech = {
-  name: string;
+  name: TechName;
   href: string;
   tone: "python" | "javascript" | "typescript" | "tailwind" | "bootstrap" | "java" | "kotlin" | "obsidian" | "django" | "android" | "docker" | "synology";
-  hint: string;
 };
 
+/** Tooltips live in localization/<lang>/tech.ts. */
 export const techStack: Tech[] = [
-  { name: "Python", href: "https://www.python.org/", tone: "python", hint: "Oficjalna strona Pythona" },
-  { name: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript", tone: "javascript", hint: "MDN: JavaScript" },
-  { name: "TypeScript", href: "https://www.typescriptlang.org/", tone: "typescript", hint: "Oficjalna strona TypeScripta" },
-  { name: "Bootstrap", href: "https://getbootstrap.com/", tone: "bootstrap", hint: "Oficjalna strona Bootstrapa" },
-  { name: "Tailwind", href: "https://tailwindcss.com/", tone: "tailwind", hint: "Oficjalna strona Tailwind CSS" },
-  { name: "Java", href: "https://www.java.com/", tone: "java", hint: "Oficjalna strona Javy" },
-  { name: "Kotlin", href: "https://kotlinlang.org/", tone: "kotlin", hint: "Oficjalna strona Kotlina" },
-  { name: "Obsidian", href: "https://obsidian.md/", tone: "obsidian", hint: "Oficjalna strona Obsidiana" },
-  { name: "Django", href: "https://www.djangoproject.com/", tone: "django", hint: "Oficjalna strona Django" },
-  { name: "Android", href: "https://www.android.com/", tone: "android", hint: "Oficjalna strona systemu Android" },
-  { name: "Synology", href: "https://www.synology.com/", tone: "synology", hint: "Oficjalna strona Synology" },
-  { name: "Docker", href: "https://www.docker.com/", tone: "docker", hint: "Oficjalna strona Dockera" }
+  { name: "Python", href: "https://www.python.org/", tone: "python" },
+  { name: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript", tone: "javascript" },
+  { name: "TypeScript", href: "https://www.typescriptlang.org/", tone: "typescript" },
+  { name: "Bootstrap", href: "https://getbootstrap.com/", tone: "bootstrap" },
+  { name: "Tailwind", href: "https://tailwindcss.com/", tone: "tailwind" },
+  { name: "Java", href: "https://www.java.com/", tone: "java" },
+  { name: "Kotlin", href: "https://kotlinlang.org/", tone: "kotlin" },
+  { name: "Obsidian", href: "https://obsidian.md/", tone: "obsidian" },
+  { name: "Django", href: "https://www.djangoproject.com/", tone: "django" },
+  { name: "Android", href: "https://www.android.com/", tone: "android" },
+  { name: "Synology", href: "https://www.synology.com/", tone: "synology" },
+  { name: "Docker", href: "https://www.docker.com/", tone: "docker" }
 ];
 
 /**
@@ -70,10 +71,9 @@ export const techStack: Tech[] = [
 export type Stat = number | "github-stars" | "github-releases" | "obsidian-downloads";
 
 export type Project = {
-  title: string;
-  kind: string;
+  /** Key of the texts (title, kind, description) in localization/<lang>/projects.ts. */
+  id: ProjectId;
   image: string;
-  description: string;
   repo: string;
   /** Link to the Obsidian community plugins page (optional). */
   obsidian_marketplace?: string;
@@ -91,11 +91,8 @@ export const HIDE_ZERO_STATS = true;
 
 export const projects: Project[] = [
   {
-    title: "Camera Embed",
-    kind: "Wtyczka Obsidiana",
+    id: "camera-embed",
     image: "/images/projects/camera.png",
-    description:
-      "Wtyczka do Obsidiana, która umożliwia robienie zdjęć i dodawanie ich do notatek w kilku kliknięciach i kompresowanie ich.",
     repo: "https://github.com/slavkomelnyk/camera-embed",
     obsidian_marketplace: "https://community.obsidian.md/plugins/camera-embed",
     obsidianId: "camera-embed",
@@ -103,21 +100,15 @@ export const projects: Project[] = [
     tags: ["JavaScript", "Obsidian"],
   },
   {
-    title: "School Ahead TV",
-    kind: "Aplikacja Android TV",
+    id: "school-ahead-tv",
     image: "/images/projects/tv.png",
-    description:
-      "Aplikacja na Android TV, która ułatwia mojej młodszej siostrze uruchamianie lekcji. Obsługuje nawigację pilotem, odtwarzanie wideo i własne menu sterowania video.",
     repo: "https://github.com/slavkomelnyk/school-ahead-tv",
     stats: { stars: "github-stars", downloads: "github-releases" },
     tags: ["Kotlin", "Android", "Java"],
   },
   {
-    title: "Sklep w Django",
-    kind: "Aplikacja webowa",
+    id: "django-shop",
     image: "/images/projects/shop.png",
-    description:
-      "Prosty sklep internetowy dla dzieci stworzony w Django, wyposażony w system logowania, komentarzy i ocen oraz interfejs w Bootstrapie. Uruchamiany w Dockerze na serwerze Synology NAS.",
     repo: "https://github.com/slavkomelnyk/shoper-main",
     stats: { stars: "github-stars" },
     tags: ["Python", "Django", "Bootstrap", "Docker", "Synology"],

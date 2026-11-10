@@ -6,17 +6,21 @@ import { SiGithub } from "react-icons/si";
 import { portfolio } from "@/config/portfolio";
 import { cn } from "cn";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLocale } from "@/components/LocaleProvider";
+import type { UiKey } from "@/localization";
 
-const links = [
-  { id: "top", label: "Strona główna", href: "#top", Icon: LuHouse },
-  { id: "about", label: "O mnie", href: "#about", Icon: LuUserRound },
-  { id: "projects", label: "Projekty", href: "#projects", Icon: LuCode },
+const links: { id: string; label: UiKey; href: string; Icon: typeof LuHouse }[] = [
+  { id: "top", label: "navHome", href: "#top", Icon: LuHouse },
+  { id: "about", label: "navAbout", href: "#about", Icon: LuUserRound },
+  { id: "projects", label: "navProjects", href: "#projects", Icon: LuCode },
 ];
 
 const pill =
   "inline-flex h-9 items-center gap-2 rounded-xl border px-3.5 text-sm transition-all focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none";
 
 export default function Header() {
+  const { t } = useLocale();
   const [active, setActive] = useState("top");
 
   useEffect(() => {
@@ -43,7 +47,7 @@ export default function Header() {
         >
           {portfolio.name}
         </a>
-        <nav className="flex flex-wrap items-center gap-2" aria-label="Menu główne">
+        <nav className="flex flex-wrap items-center gap-2" aria-label={t.navLabel}>
           {links.map(({ id, label, href, Icon }) => (
             <a
               key={id}
@@ -57,7 +61,7 @@ export default function Header() {
               )}
             >
               <Icon className="size-4" aria-hidden="true" />
-              {label}
+              {t[label]}
             </a>
           ))}
           <a
@@ -70,6 +74,7 @@ export default function Header() {
             GitHub
             <LuArrowUpRight className="size-3.5" aria-hidden="true" />
           </a>
+          <LanguageSwitcher />
           <ThemeToggle />
         </nav>
       </div>

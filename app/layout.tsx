@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import { LocaleProvider } from "@/components/LocaleProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { portfolio } from "@/config/portfolio";
 
 export const metadata: Metadata = {
   title: `${portfolio.name} — Portfolio`,
-  description: `Portfolio młodego programisty: ${portfolio.name}.`,
+  description: `Portfolio of a young programmer: ${portfolio.name}.`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pl" suppressHydrationWarning className="min-h-full font-sans antialiased">
+    <html lang="en" suppressHydrationWarning className="min-h-full font-sans antialiased">
       <head>
         {/* Apply the saved/system theme before first paint to avoid a flash. */}
         <script
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-screen">
+        <LocaleProvider>
         <TooltipProvider>
           <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6">
             <Header />
@@ -29,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Footer />
           </div>
         </TooltipProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
