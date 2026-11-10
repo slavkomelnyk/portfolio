@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  env: { NEXT_PUBLIC_BASE_PATH: prefix },
   output: 'export',
   basePath: prefix,
   assetPrefix: prefix,

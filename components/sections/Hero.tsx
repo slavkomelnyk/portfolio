@@ -74,7 +74,7 @@ export default function Hero() {
             className="hero-swap aspect-[4/3]"
           >
             <NextImage
-              src={asset(status.image)}
+              src={status.image}
               alt={status.alt}
               width={1600}
               height={1194}

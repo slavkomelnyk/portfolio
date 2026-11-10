@@ -1,4 +1,4 @@
-export const prefix = process.env.PAGES_BASE_PATH ?? '';
+export const prefix = process.env.NEXT_PUBLIC_BASE_PATH ?? process.env.PAGES_BASE_PATH ?? '';
 
 const mainConfig = {
   name: "My Portfolio",

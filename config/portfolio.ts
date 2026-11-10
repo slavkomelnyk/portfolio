@@ -1,3 +1,5 @@
+import { prefix } from "@/config/main";
+
 export const portfolio = {
   name: "Sviatoslav Melnyk",
   githubUrl: "https://github.com/slavkomelnyk",
@@ -16,19 +18,19 @@ export const STATUS_INTERVAL_MS = 10_000;
 export const statuses = [
   {
     label: "Relaks & Inspiracja",
-    image: "/images/status/relaxing.png",
+    image: prefix + "/images/status/relaxing.png",
     alt: "Sviatoslav relaksuje się w fotelu",
     json: { status: "Relaxed", coffee: "Consumed", next_move: "Build something cool after a break" },
   },
   {
     label: "Praca nad projektem",
-    image: "/images/status/working.png",
+    image: prefix + "/images/status/working.png",
     alt: "Sviatoslav pracuje nad projektem",
     json: { status: "Coding", coffee: "In progress", next_move: "Ship the next feature" },
   },
   {
     label: "Planowanie nowego pomysłu",
-    image: "/images/status/thinking.png",
+    image: prefix + "/images/status/thinking.png",
     alt: "Sviatoslav planuje nowy pomysł",
     json: { status: "Planning", coffee: "Refilled", next_move: "Sketch the next big idea" },
   },
