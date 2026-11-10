@@ -1,21 +1,20 @@
-import Link from "next/link";
+import { LuArrowUpRight } from "react-icons/lu";
+import { SiGithub } from "react-icons/si";
 import { portfolio } from "@/config/portfolio";
-import GithubIcon from "@/components/GithubIcon";
-import { ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border py-6 text-sm text-muted-foreground">
-      <p className="m-0">© 2026 {portfolio.name}</p>
-      <Link
+      <p>© 2026 {portfolio.name}</p>
+      <a
         href={portfolio.githubUrl}
-        className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
         target="_blank"
         rel="noreferrer"
+        className="inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-foreground hover:underline"
       >
-        <GithubIcon className="mr-1 inline size-4 dark:invert" /> GitHub
-        <ArrowUpRight className="ml-1 inline size-3.5" aria-hidden="true" />
-      </Link>
+        <SiGithub className="size-4" aria-hidden="true" /> GitHub
+        <LuArrowUpRight className="size-3.5" aria-hidden="true" />
+      </a>
     </footer>
   );
 }
