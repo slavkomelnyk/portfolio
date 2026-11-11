@@ -1,32 +1,21 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
+import { TechnologyTones } from "@/config/tech";
 
 const badgeVariants = cva(
   "inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
-      tone: {
-        neutral: "border-border bg-secondary/60 text-foreground",
-        python: "border-sky-400/40 bg-sky-400/10 text-sky-900 dark:text-sky-100",
-        javascript: "border-yellow-400/50 bg-yellow-400/10 text-yellow-900 dark:text-yellow-100",
-        java: "border-orange-500/40 bg-orange-500/10 text-orange-900 dark:text-orange-100",
-        kotlin: "border-fuchsia-400/40 bg-fuchsia-400/10 text-fuchsia-900 dark:text-fuchsia-100",
-        obsidian: "border-violet-400/40 bg-violet-400/10 text-violet-900 dark:text-violet-100",
-        django: "border-emerald-500/40 bg-emerald-500/10 text-emerald-900 dark:text-emerald-100",
-        android: "border-green-400/50 bg-green-400/10 text-green-900 dark:text-green-100",
-        synology: "border-blue-400/40 bg-blue-400/10 text-blue-900 dark:text-blue-100",
-        typescript: "border-blue-600/40 bg-blue-600/10 text-blue-900 dark:text-blue-100",
-        tailwind: "border-cyan-400/40 bg-cyan-400/10 text-cyan-900 dark:text-cyan-100",
-        docker: "border-sky-600/40 bg-sky-600/10 text-sky-900 dark:text-sky-100",
-        bootstrap: "border-purple-500/40 bg-purple-500/10 text-purple-900 dark:text-purple-100",
-      },
+      tone: Object.fromEntries(
+        Object.entries(TechnologyTones).map(([id, classes]) => [id, classes])
+      ),
     },
     defaultVariants: { tone: "neutral" },
   }
-)
+);
 
-export type BadgeTone = NonNullable<VariantProps<typeof badgeVariants>["tone"]>
+export type BadgeTone = NonNullable<VariantProps<typeof badgeVariants>["tone"]>;
 
 function Badge({
   className,
@@ -39,7 +28,7 @@ function Badge({
       className={cn(badgeVariants({ tone }), className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Badge, badgeVariants }
+export { Badge, badgeVariants };

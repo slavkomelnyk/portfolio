@@ -3,18 +3,18 @@
 import NextImage from "next/image";
 import { LuArrowUpRight } from "react-icons/lu";
 import { SiGithub, SiObsidian } from "react-icons/si";
-import { Badge, type BadgeTone } from "@/components/ui/badge";
+import { Badge} from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
 } from "@/components/ui/carousel";
 import ProjectStats from "@/components/ProjectStats";
 import TechIcon from "@/components/TechIcon";
-import { projects, techStack } from "@/config/portfolio";
+import { projects } from "@/config/projects";
 import { asset } from "@/lib/assets";
 import { useLocale } from "@/components/LocaleProvider";
-
-const toneOf = (name: string): BadgeTone => techStack.find((t) => t.name === name)?.tone ?? "neutral";
+import { toneOf, techNames } from "@/lib/tech";
+import { Technologies } from "@/config/tech";
 
 export default function Projects() {
   const { t, l } = useLocale();
@@ -41,12 +41,25 @@ export default function Projects() {
                 <p className="flex-1 text-sm leading-6 text-muted-foreground">{l.projects[p.id].description}</p>
                 <ProjectStats project={p} />
                 <div className="flex flex-wrap gap-2">
-                  {p.tags.map((tag) => (
-                    <Badge key={tag} tone={toneOf(tag)}>
-                      <TechIcon name={tag} />
-                      {tag}
-                    </Badge>
-                  ))}
+                  {p.tags.map((tag) => {
+                    const tech = Technologies.find((item) => item.id === tag);
+
+                    return (
+                      <a
+                        key={tag}
+                        href={tech?.href ?? "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={techNames[tag] ?? tag}
+                        className="transition-transform hover:scale-105"
+                      >
+                        <Badge tone={toneOf(tag)} className="cursor-pointer">
+                          <TechIcon id={tag} />
+                          {techNames[tag] ?? tag}
+                        </Badge>
+                      </a>
+                    );
+                  })}
                 </div>
                 <div className="flex flex-wrap gap-x-5 gap-y-2">
                   <a

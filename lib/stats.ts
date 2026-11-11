@@ -1,4 +1,5 @@
-import { STATS_CACHE_MINUTES, type Project, type Stat } from "@/config/portfolio";
+import { STATS_CACHE_MINUTES } from "@/config/projects";
+import { Stat, Project } from "@/config/types";
 
 // Browser-only helpers: statistics are fetched when the page loads, so they are always current.
 

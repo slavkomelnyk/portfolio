@@ -1,4 +1,5 @@
-import type { ProjectId, ProjectText } from "@/localization/types";
+import { ProjectId } from "@/config/types";
+import type { ProjectText } from "@/localization/types";
 
 export const projects: Record<ProjectId, ProjectText> = {
   "camera-embed": {

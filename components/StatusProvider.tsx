@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { STATUS_INTERVAL_MS, statuses } from "@/config/portfolio";
+import { STATUS_INTERVAL_MS, statuses } from "@/config/status";
 
 type Ctx = { index: number; status: (typeof statuses)[number]; next: () => void };
 const StatusContext = createContext<Ctx | null>(null);
