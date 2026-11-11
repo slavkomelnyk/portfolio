@@ -1,4 +1,5 @@
-import type { StatusId, StatusText } from "@/localization/types";
+import { StatusId } from "@/config/types";
+import type { StatusText } from "@/localization/types";
 
 export const statuses: Record<StatusId, StatusText> = {
   relaxing: { label: "Relaks & Inspiracja", alt: "Sviatoslav relaksuje się w fotelu" },

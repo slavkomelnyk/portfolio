@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { LuDownload, LuPackageCheck, LuStar } from "react-icons/lu";
-import { HIDE_ZERO_STATS, type Project } from "@/config/portfolio";
+import { HIDE_ZERO_STATS } from "@/config/projects";
 import { useLocale } from "@/components/LocaleProvider";
 import { numberLocale } from "@/localization";
 import { getProjectStats, type ResolvedStats } from "@/lib/stats";
+import { Project } from "@/config/types";
 
 export default function ProjectStats({ project }: { project: Project }) {
   const { locale, t } = useLocale();

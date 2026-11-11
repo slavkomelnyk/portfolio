@@ -6,7 +6,8 @@ import TechIcon from "@/components/TechIcon";
 import { useStatus } from "@/components/StatusProvider";
 import { useLocale } from "@/components/LocaleProvider";
 import { portfolio } from "@/config/portfolio";
-import { asset } from "@/lib/assets";
+import { Technologies } from "@/config/tech";
+import { toneOf } from "@/lib/tech";
 
 // Deterministic binary rain (no Math.random -> no hydration mismatch).
 const binary = Array.from({ length: 14 }, (_, r) =>
@@ -55,13 +56,27 @@ export default function Hero() {
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
             {t.heroIntro}{" "}
-            <Badge tone="python" className="font-mono align-middle">
-              <TechIcon name="Python" /> Python
-            </Badge>{" "}
+            <a
+              href={Technologies.find((tech) => tech.id === "python")?.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex align-middle"
+            >
+              <Badge tone={toneOf("python")} className="cursor-pointer font-mono transition-transform hover:scale-105">
+                <TechIcon id="python" /> Python
+              </Badge>
+            </a>{" "}
             {t.heroAnd}{" "}
-            <Badge tone="javascript" className="font-mono align-middle">
-              <TechIcon name="JavaScript" /> JavaScript
-            </Badge>
+            <a
+              href={Technologies.find((tech) => tech.id === "javascript")?.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex align-middle"
+            >
+              <Badge tone={toneOf("javascript")} className="cursor-pointer font-mono transition-transform hover:scale-105">
+                <TechIcon id="javascript" /> JavaScript
+              </Badge>
+            </a>
             .
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">

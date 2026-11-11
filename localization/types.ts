@@ -4,11 +4,7 @@
  * When you add a project, status or technology, add its id/name to the unions below.
  */
 
-export type ProjectId = "camera-embed" | "school-ahead-tv" | "django-shop";
-export type StatusId = "relaxing" | "working" | "thinking";
-export type TechName =
-  | "Python" | "JavaScript" | "TypeScript" | "Bootstrap" | "Tailwind" | "Java"
-  | "Kotlin" | "Obsidian" | "Django" | "Android" | "Synology" | "Docker";
+import { ProjectId, StatusId, TechnologiesName } from "@/config/types";
 
 export type Ui = {
   metaTitle: string;
@@ -53,5 +49,5 @@ export type Translation = {
   projects: Record<ProjectId, ProjectText>;
   statuses: Record<StatusId, StatusText>;
   /** Tooltip shown over a technology badge. */
-  techHints: Record<TechName, string>;
+  techHints: Record<TechnologiesName, string>;
 };
