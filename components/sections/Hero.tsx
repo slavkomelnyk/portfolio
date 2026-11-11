@@ -48,7 +48,7 @@ export default function Hero() {
             >
               <span className="status-dot size-2.5 rounded-full bg-green-400" aria-hidden="true" />
               <span className="text-muted-foreground">{t.heroFocus}</span>
-              <span key={status.id} className="hero-swap font-medium text-green-600 dark:text-green-400">
+              <span key={status.id} className="hero-label font-medium text-green-600 dark:text-green-400">
                 {l.statuses[status.id].label}
               </span>
             </button>
@@ -85,18 +85,17 @@ export default function Hero() {
         </div>
 
         <div className="mx-auto w-full max-w-xs md:max-w-none">
-          <div
-            key={status.image}
-            className="hero-swap aspect-[4/3]"
-          >
-            <NextImage
-              src={status.image}
-              alt={l.statuses[status.id].alt}
-              width={1600}
-              height={1194}
-              priority
-              className="size-full object-contain drop-shadow-[0_0_40px_oklch(0.7_0.15_280/30%)]"
-            />
+          <div key={status.image} className="hero-swap aspect-[4/3]">
+            <div className="hero-float size-full">
+              <NextImage
+                src={status.image}
+                alt={l.statuses[status.id].alt}
+                width={1600}
+                height={1194}
+                priority
+                className="size-full object-contain drop-shadow-[0_0_40px_oklch(0.7_0.15_280/30%)]"
+              />
+            </div>
           </div>
         </div>
       </div>
