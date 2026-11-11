@@ -5,7 +5,7 @@ import {
 } from "react-icons/si";
 
 // Technology names and official URLs
-export const Technologies: TechnologiesType[] = [
+export const Technologies = [
   { id: "javascript", name: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
   { id: "typescript", name: "TypeScript", href: "https://www.typescriptlang.org/" },
   { id: "python", name: "Python", href: "https://www.python.org/" },
@@ -26,7 +26,7 @@ export const Technologies: TechnologiesType[] = [
   { id: "synology", name: "Synology", href: "https://www.synology.com/" },
 
   { id: "obsidian", name: "Obsidian", href: "https://obsidian.md/" },
-];
+] as const satisfies readonly TechnologiesType[];
 
 // Badge colors for technologies
 export const TechnologyTones = {
@@ -46,7 +46,7 @@ export const TechnologyTones = {
   html: "border-orange-500/40 bg-orange-500/10 text-orange-900 dark:text-orange-100",
   nextjs: "border-neutral-500/40 bg-neutral-500/10 text-neutral-900 dark:text-neutral-100",
   react: "border-sky-500/40 bg-sky-500/10 text-sky-900 dark:text-sky-100",
-} as const;
+} as const satisfies Record<TechnologiesId | "neutral", string>;
 
 
 // Technologies displayed in the Tech Stack section

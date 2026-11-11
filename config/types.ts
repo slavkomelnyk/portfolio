@@ -7,8 +7,6 @@ import { statuses } from "./status";
 
 export type TechnologiesId = (typeof Technologies)[number]["id"];
 
-export type TechnologiesName = (typeof Technologies)[number]["name"];
-
 
 export type TechnologiesType = {
   id: string;
@@ -16,7 +14,7 @@ export type TechnologiesType = {
   href: string;
 };
 
-export type BadgeTone = keyof typeof TechnologyTones;
+export type TechnologyTonesType = keyof typeof TechnologyTones;
 
 export type TechnologyIconEntry = {
   Icon: IconType;

@@ -4,7 +4,7 @@
  * When you add a project, status or technology, add its id/name to the unions below.
  */
 
-import { ProjectId, StatusId, TechnologiesName } from "@/config/types";
+import { ProjectId, StatusId, TechnologiesId } from "@/config/types";
 
 export type Ui = {
   metaTitle: string;
@@ -49,5 +49,5 @@ export type Translation = {
   projects: Record<ProjectId, ProjectText>;
   statuses: Record<StatusId, StatusText>;
   /** Tooltip shown over a technology badge. */
-  techHints: Record<TechnologiesName, string>;
+  techHints: Record<TechnologiesId, string>;
 };
