@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   },
   env: { NEXT_PUBLIC_BASE_PATH: prefix },
   output: 'export',
+  // Emit pl/index.html instead of pl.html so /pl/ resolves on GitHub Pages.
+  trailingSlash: true,
   basePath: prefix,
   assetPrefix: prefix,
   images: {
