@@ -4,7 +4,7 @@ import { Status } from "./types";
 /** How long a status stays before auto-advancing to the next one (ms). */
 export const STATUS_INTERVAL_MS = 10_000;
 
-/** Texts (label, alt) live in localization/<lang>/statuses.ts. */
+/** Texts (label, alt) live in messages/<lang>.json ("statuses"). */
 export const statuses: Status[] = [
   {
     id: "relaxing",

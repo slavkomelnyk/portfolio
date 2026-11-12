@@ -12,14 +12,16 @@ import ProjectStats from "@/components/ProjectStats";
 import TechIcon from "@/components/TechIcon";
 import { projects } from "@/config/projects";
 import { asset } from "@/lib/assets";
-import { useLocale } from "@/components/LocaleProvider";
+import { useTranslations } from "next-intl";
 import { toneOf, techNames } from "@/lib/tech";
 import { Technologies } from "@/config/tech";
 
 export default function Projects() {
-  const { t, l } = useLocale();
+  const t = useTranslations("ui");
+  // Project ids are plain strings in config, so message keys are cast.
+  const tp = useTranslations("projects");
   return (
-    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label={t.projectsLabel}>
+    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label={t("projectsLabel")}>
       <CarouselContent>
         {projects.map((p) => (
           <CarouselItem key={p.id} className="md:basis-1/2">
@@ -27,18 +29,18 @@ export default function Projects() {
               <div className="mx-5 aspect-square max-h-56 self-center">
                 <NextImage
                   src={asset(p.image)}
-                  alt={`${t.projectIconAlt}: ${l.projects[p.id].title}`}
+                  alt={`${t("projectIconAlt")}: ${tp(`${p.id}.title` as never)}`}
                   width={400}
                   height={400}
                   className="size-full object-contain"
                 />
               </div>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">{l.projects[p.id].title}</CardTitle>
-                <CardDescription>{l.projects[p.id].kind}</CardDescription>
+                <CardTitle className="text-lg font-semibold">{tp(`${p.id}.title` as never)}</CardTitle>
+                <CardDescription>{tp(`${p.id}.kind` as never)}</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col gap-4">
-                <p className="flex-1 text-sm leading-6 text-muted-foreground">{l.projects[p.id].description}</p>
+                <p className="flex-1 text-sm leading-6 text-muted-foreground">{tp(`${p.id}.description` as never)}</p>
                 <ProjectStats project={p} />
                 <div className="flex flex-wrap gap-2">
                   {p.tags.map((tag) => {
@@ -90,8 +92,8 @@ export default function Projects() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious label={t.carouselPrev} />
-      <CarouselNext label={t.carouselNext} />
+      <CarouselPrevious label={t("carouselPrev")} />
+      <CarouselNext label={t("carouselNext")} />
     </Carousel>
   );
 }

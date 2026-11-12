@@ -27,7 +27,7 @@ export type Stat = number | "github-stars" | "github-releases" | "obsidian-downl
 export type ProjectId = (typeof projects)[number]["id"];
 
 export type Project = {
-  /** Key of the texts (title, kind, description) in localization/<lang>/projects.ts. */
+  /** Key of the texts (title, kind, description) in messages/<lang>.json ("projects"). */
   id: string;
   image: string;
   repo: string;

@@ -1,19 +1,30 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
-import { locales, localeLabels } from "@/localization";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { LOCALE_STORAGE_KEY, localeLabels, routing, type Locale } from "@/i18n/routing";
 import { cn } from "cn";
 
 export default function LanguageSwitcher() {
-  const { locale, setLocale, t } = useLocale();
+  const locale = useLocale();
+  const t = useTranslations("ui");
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const setLocale = (l: Locale) => {
+    try {
+      localStorage.setItem(LOCALE_STORAGE_KEY, l);
+    } catch {}
+    router.replace(pathname, { locale: l, scroll: false });
+  };
 
   return (
     <div
       role="group"
-      aria-label={t.languageSwitcher}
+      aria-label={t("languageSwitcher")}
       className="inline-flex h-9 items-center rounded-xl border border-border p-0.5"
     >
-      {locales.map((l) => (
+      {routing.locales.map((l) => (
         <button
           key={l}
           type="button"

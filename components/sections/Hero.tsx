@@ -4,7 +4,7 @@ import NextImage from "next/image";
 import { Badge } from "@/components/ui/badge";
 import TechIcon from "@/components/TechIcon";
 import { useStatus } from "@/components/StatusProvider";
-import { useLocale } from "@/components/LocaleProvider";
+import { useTranslations } from "next-intl";
 import { portfolio } from "@/config/portfolio";
 import { Technologies } from "@/config/tech";
 import { toneOf } from "@/lib/tech";
@@ -16,7 +16,9 @@ const binary = Array.from({ length: 14 }, (_, r) =>
 
 export default function Hero() {
   const { status, next } = useStatus();
-  const { t, l } = useLocale();
+  const t = useTranslations("ui");
+  // Status ids are plain strings in config, so message keys are cast.
+  const ts = useTranslations("statuses");
 
   return (
     <section id="top" className="relative isolate">
@@ -32,30 +34,30 @@ export default function Hero() {
       <div className="grid items-center gap-8 py-12 md:grid-cols-[minmax(0,1fr)_20rem] lg:grid-cols-[minmax(0,1fr)_24rem]">
         <div className="motion-fade-up">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            {t.heroGreeting} {portfolio.name}
+            {t("heroGreeting")} {portfolio.name}
           </h1>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <h2 id="about" className="text-2xl font-semibold">
-              {t.heroPassion}
+              {t("heroPassion")}
             </h2>
             <button
               type="button"
               onClick={next}
               aria-live="polite"
-              title={t.heroFocusTitle}
+              title={t("heroFocusTitle")}
               className="inline-flex cursor-pointer items-center gap-2.5 rounded-full border border-border bg-card/70 px-4 py-1.5 text-sm backdrop-blur transition-all hover:scale-105 hover:border-foreground/30 focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none"
             >
               <span className="status-dot size-2.5 rounded-full bg-green-400" aria-hidden="true" />
-              <span className="text-muted-foreground">{t.heroFocus}</span>
+              <span className="text-muted-foreground">{t("heroFocus")}</span>
               <span key={status.id} className="hero-label font-medium text-green-600 dark:text-green-400">
-                {l.statuses[status.id].label}
+                {ts(`${status.id}.label` as never)}
               </span>
             </button>
           </div>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-            {t.heroIntro}{" "}
+            {t("heroIntro")}{" "}
             <a
               href={Technologies.find((tech) => tech.id === "python")?.href}
               target="_blank"
@@ -66,7 +68,7 @@ export default function Hero() {
                 <TechIcon id="python" /> Python
               </Badge>
             </a>{" "}
-            {t.heroAnd}{" "}
+            {t("heroAnd")}{" "}
             <a
               href={Technologies.find((tech) => tech.id === "javascript")?.href}
               target="_blank"
@@ -80,7 +82,7 @@ export default function Hero() {
             .
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
-            {t.heroOutro}
+            {t("heroOutro")}
           </p>
         </div>
 
@@ -89,7 +91,7 @@ export default function Hero() {
             <div className="hero-float size-full">
               <NextImage
                 src={status.image}
-                alt={l.statuses[status.id].alt}
+                alt={ts(`${status.id}.alt` as never)}
                 width={1600}
                 height={1194}
                 priority

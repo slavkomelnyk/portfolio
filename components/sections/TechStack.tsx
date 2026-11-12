@@ -7,10 +7,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import TechIcon from "@/components/TechIcon";
 import { Technologies, techStack } from "@/config/tech";
 import { toneOf, techNames } from "@/lib/tech";
-import { useLocale } from "@/components/LocaleProvider";
+import { useTranslations } from "next-intl";
 
 export default function TechStack() {
-  const { l } = useLocale();
+  const t = useTranslations("techHints");
 
   return (
     <Card className="rounded-3xl">
@@ -31,7 +31,7 @@ export default function TechStack() {
                   href={tech.href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`${tech.name} – ${l.techHints[id]}`}
+                  aria-label={`${tech.name} – ${t(id)}`}
                 >
                   <Badge
                     tone={toneOf(id)}
@@ -44,7 +44,7 @@ export default function TechStack() {
               </TooltipTrigger>
 
               <TooltipContent>
-                {l.techHints[id]} ↗
+                {t(id)} ↗
               </TooltipContent>
             </Tooltip>
           );
