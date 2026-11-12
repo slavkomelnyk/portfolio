@@ -7,10 +7,9 @@ import { portfolio } from "@/config/portfolio";
 import { cn } from "cn";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { useLocale } from "@/components/LocaleProvider";
-import type { UiKey } from "@/localization";
+import { useTranslations } from "next-intl";
 
-const links: { id: string; label: UiKey; href: string; Icon: typeof LuHouse }[] = [
+const links: { id: string; label: "navHome" | "navAbout" | "navProjects"; href: string; Icon: typeof LuHouse }[] = [
   { id: "top", label: "navHome", href: "#top", Icon: LuHouse },
   { id: "about", label: "navAbout", href: "#about", Icon: LuUserRound },
   { id: "projects", label: "navProjects", href: "#projects", Icon: LuCode },
@@ -20,7 +19,7 @@ const pill =
   "inline-flex h-9 items-center gap-2 rounded-xl border px-3.5 text-sm transition-all focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none";
 
 export default function Header() {
-  const { t } = useLocale();
+  const t = useTranslations("ui");
   const [active, setActive] = useState("top");
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Header() {
         >
           {portfolio.name}
         </a>
-        <nav className="flex flex-wrap items-center gap-2" aria-label={t.navLabel}>
+        <nav className="flex flex-wrap items-center gap-2" aria-label={t("navLabel")}>
           {links.map(({ id, label, href, Icon }) => (
             <a
               key={id}
@@ -61,7 +60,7 @@ export default function Header() {
               )}
             >
               <Icon className="size-4" aria-hidden="true" />
-              {t[label]}
+              {t(label)}
             </a>
           ))}
           <a

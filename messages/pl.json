@@ -1,0 +1,78 @@
+{
+  "ui": {
+    "metaTitle": "Portfolio",
+    "metaDescription": "Portfolio młodego programisty",
+    "languageSwitcher": "Język",
+    "navHome": "Strona główna",
+    "navAbout": "O mnie",
+    "navProjects": "Projekty",
+    "navLabel": "Menu główne",
+    "themeToLight": "Przełącz na jasny motyw",
+    "themeToDark": "Przełącz na ciemny motyw",
+    "themeLightTitle": "Jasny motyw",
+    "themeDarkTitle": "Ciemny motyw",
+    "heroGreeting": "Cześć! Jestem",
+    "heroPassion": "Moją pasją jest programowanie!",
+    "heroFocus": "Aktualny fokus:",
+    "heroFocusTitle": "Kliknij, aby zmienić status",
+    "heroIntro": "Lubię tworzyć aplikacje, poznawać nowe technologie i wymyślać rozwiązania, które ułatwiają codzienne życie.",
+    "heroAnd": "i",
+    "heroOutro": "Programowanie pozwala mi rozwijać kreatywność, uczyć się logicznego myślenia i realizować własne pomysły.",
+    "projectsTitle": "Moje projekty",
+    "projectsLabel": "Moje projekty",
+    "projectIconAlt": "Ikona projektu",
+    "carouselPrev": "Poprzedni projekt",
+    "carouselNext": "Następny projekt",
+    "statStars": "Gwiazdki na GitHubie",
+    "statInstalls": "Instalacje",
+    "statDownloads": "Pobrania"
+  },
+  "projects": {
+    "camera-embed": {
+      "title": "Camera Embed",
+      "kind": "Wtyczka Obsidiana",
+      "description": "Wtyczka do Obsidiana, która umożliwia robienie zdjęć i dodawanie ich do notatek w kilku kliknięciach i kompresowanie ich."
+    },
+    "school-ahead-tv": {
+      "title": "School Ahead TV",
+      "kind": "Aplikacja Android TV",
+      "description": "Aplikacja na Android TV, która ułatwia mojej młodszej siostrze uruchamianie lekcji. Obsługuje nawigację pilotem, odtwarzanie wideo i własne menu sterowania video."
+    },
+    "django-shop": {
+      "title": "Sklep w Django",
+      "kind": "Aplikacja webowa",
+      "description": "Prosty sklep internetowy dla dzieci stworzony w Django, wyposażony w system logowania, komentarzy i ocen oraz interfejs w Bootstrapie. Uruchamiany w Dockerze na serwerze Synology NAS."
+    }
+  },
+  "statuses": {
+    "relaxing": {
+      "label": "Relaks & Inspiracja",
+      "alt": "Sviatoslav relaksuje się w fotelu"
+    },
+    "working": {
+      "label": "Praca nad projektem",
+      "alt": "Sviatoslav pracuje nad projektem"
+    },
+    "thinking": {
+      "label": "Planowanie nowego pomysłu",
+      "alt": "Sviatoslav planuje nowy pomysł"
+    }
+  },
+  "techHints": {
+    "python": "Oficjalna strona Pythona",
+    "javascript": "MDN: JavaScript",
+    "typescript": "Oficjalna strona TypeScripta",
+    "bootstrap": "Oficjalna strona Bootstrapa",
+    "tailwindcss": "Oficjalna strona Tailwind CSS",
+    "java": "Oficjalna strona Javy",
+    "kotlin": "Oficjalna strona Kotlina",
+    "obsidian": "Oficjalna strona Obsidiana",
+    "django": "Oficjalna strona Django",
+    "android": "Oficjalna strona systemu Android",
+    "synology": "Oficjalna strona Synology",
+    "docker": "Oficjalna strona Dockera",
+    "html": "Oficjalna strona HTML",
+    "nextjs": "Oficjalna strona Next.js",
+    "react": "Oficjalna strona React"
+  }
+}

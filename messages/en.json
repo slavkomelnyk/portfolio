@@ -1,0 +1,78 @@
+{
+  "ui": {
+    "metaTitle": "Portfolio",
+    "metaDescription": "Portfolio of a young programmer",
+    "languageSwitcher": "Language",
+    "navHome": "Home",
+    "navAbout": "About me",
+    "navProjects": "Projects",
+    "navLabel": "Main menu",
+    "themeToLight": "Switch to light theme",
+    "themeToDark": "Switch to dark theme",
+    "themeLightTitle": "Light theme",
+    "themeDarkTitle": "Dark theme",
+    "heroGreeting": "Hi! I'm",
+    "heroPassion": "Programming is my passion!",
+    "heroFocus": "Current focus:",
+    "heroFocusTitle": "Click to change the status",
+    "heroIntro": "I enjoy building apps, learning new technologies and coming up with solutions that make everyday life easier.",
+    "heroAnd": "and",
+    "heroOutro": "Programming lets me develop my creativity, learn logical thinking and bring my own ideas to life.",
+    "projectsTitle": "My projects",
+    "projectsLabel": "My projects",
+    "projectIconAlt": "Project icon",
+    "carouselPrev": "Previous project",
+    "carouselNext": "Next project",
+    "statStars": "GitHub stars",
+    "statInstalls": "Installs",
+    "statDownloads": "Downloads"
+  },
+  "projects": {
+    "camera-embed": {
+      "title": "Camera Embed",
+      "kind": "Obsidian plugin",
+      "description": "An Obsidian plugin that lets you take photos, compress them and add them to your notes in just a few clicks."
+    },
+    "school-ahead-tv": {
+      "title": "School Ahead TV",
+      "kind": "Android TV app",
+      "description": "An Android TV app that makes it easier for my younger sister to start her lessons. It supports remote-control navigation, video playback and a custom control menu."
+    },
+    "django-shop": {
+      "title": "Django Shop",
+      "kind": "Web application",
+      "description": "A simple online shop for kids built with Django, with login, comments and ratings and a Bootstrap interface. It runs in Docker on a Synology NAS server."
+    }
+  },
+  "statuses": {
+    "relaxing": {
+      "label": "Relax & Inspiration",
+      "alt": "Sviatoslav relaxing in an armchair"
+    },
+    "working": {
+      "label": "Working on a project",
+      "alt": "Sviatoslav working on a project"
+    },
+    "thinking": {
+      "label": "Planning a new idea",
+      "alt": "Sviatoslav planning a new idea"
+    }
+  },
+  "techHints": {
+    "python": "Official Python website",
+    "javascript": "MDN: JavaScript",
+    "typescript": "Official TypeScript website",
+    "bootstrap": "Official Bootstrap website",
+    "tailwindcss": "Official Tailwind CSS website",
+    "java": "Official Java website",
+    "kotlin": "Official Kotlin website",
+    "obsidian": "Official Obsidian website",
+    "django": "Official Django website",
+    "android": "Official Android website",
+    "synology": "Official Synology website",
+    "docker": "Official Docker website",
+    "html": "Official Html website",
+    "nextjs": "Official Next.js website",
+    "react": "Offical React website"
+  }
+}
