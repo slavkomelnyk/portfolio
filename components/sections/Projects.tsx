@@ -6,7 +6,7 @@ import { SiGithub, SiObsidian } from "react-icons/si";
 import { Badge} from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
+  Carousel, CarouselItem,
 } from "@/components/ui/carousel";
 import ProjectStats from "@/components/ProjectStats";
 import TechIcon from "@/components/TechIcon";
@@ -15,16 +15,17 @@ import { asset } from "@/lib/assets";
 import { useTranslations } from "next-intl";
 import { toneOf, techNames } from "@/lib/tech";
 import { Technologies } from "@/config/tech";
+import { obsidianMarketplaceUrl } from "@/lib/stats";
 
 export default function Projects() {
   const t = useTranslations("ui");
   // Project ids are plain strings in config, so message keys are cast.
   const tp = useTranslations("projects");
   return (
-    <Carousel opts={{ align: "start", loop: true }} autoplay={4000} aria-label={t("projectsLabel")}>
-      <CarouselContent>
+    <section className="py-6">
+      <Carousel speed={40} aria-label={t("projectsLabel")}>
         {projects.map((p) => (
-          <CarouselItem key={p.id} className="md:basis-1/2">
+          <CarouselItem key={p.id}>
             <Card className="h-full rounded-3xl transition-transform duration-200 hover:scale-[1.02]">
               <div className="mx-5 aspect-square max-h-56 self-center">
                 <NextImage
@@ -76,7 +77,7 @@ export default function Projects() {
                   </a>
                   {p.obsidian_marketplace && (
                     <a
-                      href={p.obsidian_marketplace}
+                      href={obsidianMarketplaceUrl(p.obsidian_marketplace)}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 text-sm underline-offset-4 hover:underline"
@@ -91,9 +92,7 @@ export default function Projects() {
             </Card>
           </CarouselItem>
         ))}
-      </CarouselContent>
-      <CarouselPrevious label={t("carouselPrev")} />
-      <CarouselNext label={t("carouselNext")} />
-    </Carousel>
+      </Carousel>
+    </section>
   );
 }
