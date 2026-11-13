@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { LuDownload, LuPackageCheck, LuStar } from "react-icons/lu";
 import { HIDE_ZERO_STATS } from "@/config/projects";
 import { useFormatter, useTranslations } from "next-intl";
-import { getProjectStats, type ResolvedStats } from "@/lib/stats";
+import { getProjectStats, obsidianIdOf, type ResolvedStats } from "@/lib/stats";
 import { Project } from "@/config/types";
 
 export default function ProjectStats({ project }: { project: Project }) {
@@ -33,9 +33,13 @@ export default function ProjectStats({ project }: { project: Project }) {
       ].filter((m) => m.value !== null && !(HIDE_ZERO_STATS && m.value === 0))
     : [];
 
+  // Enabled per project with stats: { button: "obsidian-download" }.
+  const obsidianId = obsidianIdOf(project);
+  const showInstall = project.stats.button === "obsidian-download" && !!obsidianId;
+
   // The row keeps its height while loading so the card does not jump.
   return (
-    <ul className="flex min-h-5 flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground" aria-live="polite">
+    <ul className="flex min-h-5 flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground" aria-live="polite">
       {metrics.map(({ key, label, Icon, value }) => (
         <li key={key} title={label} className="hero-swap inline-flex items-center gap-1.5">
           <Icon className="size-4" aria-hidden="true" />
@@ -43,6 +47,17 @@ export default function ProjectStats({ project }: { project: Project }) {
           {format.number(value as number)}
         </li>
       ))}
+      {showInstall && (
+        <li className="ml-auto">
+          <a
+            href={`obsidian://show-plugin?id=${encodeURIComponent(obsidianId as string)}`}
+            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            <LuDownload className="size-3.5" aria-hidden="true" />
+            {t("installInObsidian")}
+          </a>
+        </li>
+      )}
     </ul>
   );
 }

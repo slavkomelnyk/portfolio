@@ -21,11 +21,10 @@
     "projectsTitle": "My projects",
     "projectsLabel": "My projects",
     "projectIconAlt": "Project icon",
-    "carouselPrev": "Previous project",
-    "carouselNext": "Next project",
     "statStars": "GitHub stars",
     "statInstalls": "Installs",
-    "statDownloads": "Downloads"
+    "statDownloads": "Downloads",
+    "installInObsidian": "Install in Obsidian"
   },
   "projects": {
     "camera-embed": {
@@ -42,6 +41,11 @@
       "title": "Django Shop",
       "kind": "Web application",
       "description": "A simple online shop for kids built with Django, with login, comments and ratings and a Bootstrap interface. It runs in Docker on a Synology NAS server."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "kind": "Web application",
+      "description": "My personal portfolio website built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui, deployed on GitHub Pages."
     }
   },
   "statuses": {
@@ -71,8 +75,15 @@
     "android": "Official Android website",
     "synology": "Official Synology website",
     "docker": "Official Docker website",
-    "html": "Official Html website",
+    "html": "Html documentation",
     "nextjs": "Official Next.js website",
-    "react": "Offical React website"
+    "react": "Official React website",
+    "shadcn": "shadcn/ui documentation",
+    "github": "Official GitHub website",
+    "githubpages": "GitHub Pages documentation",
+    "motion": "Framer Motion documentation",
+    "nextintl": "NextIntl documentation",
+    "reacticons": "React Icons documentation",
+    "css": "Css documentation"
   }
 }
