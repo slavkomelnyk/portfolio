@@ -1,105 +1,176 @@
 "use client"
 
 import * as React from "react"
-import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
-import Autoplay from "embla-carousel-autoplay"
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
 import { cn } from "cn"
-import { Button } from "@/components/ui/button"
 
-type CarouselApi = UseEmblaCarouselType[1]
-
-type CarouselContextProps = {
-  carouselRef: UseEmblaCarouselType[0]
-  api: CarouselApi
-  scrollPrev: () => void
-  scrollNext: () => void
-  canScrollPrev: boolean
-  canScrollNext: boolean
+type CarouselProps = React.ComponentProps<"div"> & {
+  /** Auto-scroll speed in pixels per second. Set to 0 to disable. */
+  speed?: number
 }
 
-const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+const EASE = 0.08 // 0..1, how quickly the scroll eases to/from a pause
 
-function useCarousel() {
-  const context = React.useContext(CarouselContext)
-  if (!context) throw new Error("useCarousel must be used within <Carousel />")
-  return context
-}
+/**
+ * Infinite, auto-scrolling carousel.
+ * - Items are rendered three times (the outer copies are aria-hidden and not tabbable) so the loop is seamless.
+ * - Speed is time-based, so it is identical on 60Hz and 120Hz displays.
+ * - Pauses (eased) on hover, focus, touch and drag; disabled for reduced motion.
+ * - Touch/trackpad use native scrolling; mouse gets drag-to-scroll.
+ */
+function Carousel({ className, children, speed = 40, ...props }: CarouselProps) {
+  const scrollerRef = React.useRef<HTMLDivElement>(null)
+  const beforeRef = React.useRef<HTMLDivElement>(null)
+  const realRef = React.useRef<HTMLDivElement>(null)
+  const afterRef = React.useRef<HTMLDivElement>(null)
+  const paused = React.useRef(false)
+  const drag = React.useRef({ active: false, moved: false, startX: 0, startLeft: 0 })
 
-function Carousel({
-  opts,
-  autoplay,
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  opts?: Parameters<typeof useEmblaCarousel>[0]
-  /** Delay between automatic slides in ms. Pauses while the mouse is over the carousel or it has focus. */
-  autoplay?: number
-}) {
-  const plugins = React.useMemo(
-    () =>
-      autoplay
-        ? [Autoplay({ delay: autoplay, stopOnInteraction: false, stopOnMouseEnter: true, stopOnFocusIn: true })]
-        : [],
-    [autoplay]
-  )
-  const [carouselRef, api] = useEmblaCarousel({ align: "start", ...opts }, plugins)
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-  const [canScrollNext, setCanScrollNext] = React.useState(false)
+  const items = React.Children.toArray(children)
+  const cloneItems = (prefix: string) =>
+    items.map((child, i) =>
+      React.isValidElement(child) ? React.cloneElement(child, { key: `${prefix}-${i}` }) : child
+    )
 
-  const onSelect = React.useCallback((api: CarouselApi) => {
-    if (!api) return
-    setCanScrollPrev(api.canScrollPrev())
-    setCanScrollNext(api.canScrollNext())
+  /** Width of one full set of items, including the trailing gap. */
+  const loopWidth = React.useCallback(() => {
+    const before = beforeRef.current?.firstElementChild as HTMLElement | undefined
+    const real = realRef.current?.firstElementChild as HTMLElement | undefined
+    if (!before || !real) return 0
+    return real.offsetLeft - before.offsetLeft
   }, [])
 
-  const scrollPrev = React.useCallback(() => api?.scrollPrev(), [api])
-  const scrollNext = React.useCallback(() => api?.scrollNext(), [api])
+  /**
+   * Three sets are rendered (clone, real, clone); keep scrollLeft inside the middle one, [w, 2w).
+   * That leaves a full set of room to scroll or drag in either direction.
+   */
+  const wrap = React.useCallback(() => {
+    const el = scrollerRef.current
+    const w = loopWidth()
+    if (!el || w <= 0) return
+    if (el.scrollLeft >= 2 * w) el.scrollLeft -= w
+    else if (el.scrollLeft < w) el.scrollLeft += w
+  }, [loopWidth])
+
+  // The copies stay clickable (they are visible while scrolling) but are removed from
+  // the tab order, so keyboard users only meet each control once.
+  React.useEffect(() => {
+    for (const set of [beforeRef.current, afterRef.current]) {
+      set?.querySelectorAll<HTMLElement>("a, button, input, select, textarea, [tabindex]").forEach((n) =>
+        n.setAttribute("tabindex", "-1")
+      )
+    }
+  })
 
   React.useEffect(() => {
-    if (!api) return
-    // Sync initial scroll state from the embla instance (external system).
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    onSelect(api)
-    api.on("reInit", onSelect).on("select", onSelect)
-    return () => {
-      api.off("reInit", onSelect).off("select", onSelect)
+    const el = scrollerRef.current
+    if (!el) return
+    // Start in the middle set so scrolling backwards works immediately.
+    el.scrollLeft = loopWidth()
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let frame = 0
+    let last = performance.now()
+    let pos = el.scrollLeft
+    let factor = 1 // eased 0 (stopped) .. 1 (full speed)
+
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.1)
+      last = now
+      const target = paused.current || reduced.matches || speed <= 0 ? 0 : 1
+      factor += (target - factor) * EASE
+
+      // Someone else moved it (wheel, touch, drag): adopt that position.
+      if (Math.abs(el.scrollLeft - pos) > 1) pos = el.scrollLeft
+      if (factor > 0.001) {
+        pos += speed * factor * dt
+        el.scrollLeft = pos
+      }
+      const before = el.scrollLeft
+      wrap()
+      if (el.scrollLeft !== before) pos = el.scrollLeft
+
+      frame = requestAnimationFrame(tick)
     }
-  }, [api, onSelect])
+    frame = requestAnimationFrame(tick)
+
+    const onScroll = () => wrap()
+    el.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      el.removeEventListener("scroll", onScroll)
+    }
+  }, [speed, wrap, loopWidth])
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return
+    drag.current = { active: true, moved: false, startX: e.clientX, startLeft: scrollerRef.current!.scrollLeft }
+  }
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current
+    if (!d.active) return
+    const dx = e.clientX - d.startX
+    if (!d.moved && Math.abs(dx) > 5) {
+      d.moved = true
+      e.currentTarget.setPointerCapture(e.pointerId)
+    }
+    if (d.moved) scrollerRef.current!.scrollLeft = d.startLeft - dx
+  }
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!drag.current.active) return
+    drag.current.active = false
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId)
+  }
 
   return (
-    <CarouselContext.Provider
-      value={{ carouselRef, api, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}
+    <div
+      role="region"
+      aria-roledescription="carousel"
+      className={cn("relative w-full", className)}
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+      onFocusCapture={() => (paused.current = true)}
+      onBlurCapture={() => (paused.current = false)}
+      onTouchStart={() => (paused.current = true)}
+      onTouchEnd={() => (paused.current = false)}
+      {...props}
     >
       <div
-        role="region"
-        aria-roledescription="carousel"
-        data-slot="carousel"
-        className={cn("relative", className)}
-        onKeyDownCapture={(e) => {
-          if (e.key === "ArrowLeft") {
+        ref={scrollerRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        // Swallow the click that ends a drag so links/cards aren't triggered.
+        onClickCapture={(e) => {
+          if (drag.current.moved) {
             e.preventDefault()
-            scrollPrev()
-          } else if (e.key === "ArrowRight") {
-            e.preventDefault()
-            scrollNext()
+            e.stopPropagation()
+            drag.current.moved = false
           }
         }}
-        {...props}
+        onDragStart={(e) => e.preventDefault()}
+        className={cn(
+          "flex gap-6 overflow-x-auto px-3 py-4",
+          "cursor-grab active:cursor-grabbing",
+          "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          // Soft fade at both edges
+          "[mask-image:linear-gradient(to_right,transparent,#000_4%,#000_96%,transparent)]"
+        )}
       >
-        {children}
+        {/* Copies for the seamless loop: hidden from assistive tech and the tab order, but clickable.
+            The middle set is the real, interactive one and is where scrolling starts. */}
+        <div ref={beforeRef} className="contents" aria-hidden="true">
+          {cloneItems("before")}
+        </div>
+        <div ref={realRef} className="contents">
+          {items}
+        </div>
+        <div ref={afterRef} className="contents" aria-hidden="true">
+          {cloneItems("after")}
+        </div>
       </div>
-    </CarouselContext.Provider>
-  )
-}
-
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
-  const { carouselRef } = useCarousel()
-  return (
-    // Padding on the viewport leaves room for hover-scale without clipping.
-    <div ref={carouselRef} className="overflow-hidden p-2 -m-2" data-slot="carousel-content">
-      <div className={cn("flex -ml-5", className)} {...props} />
     </div>
   )
 }
@@ -109,51 +180,10 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
     <div
       role="group"
       aria-roledescription="slide"
-      data-slot="carousel-item"
-      className={cn("min-w-0 shrink-0 grow-0 basis-full pl-5", className)}
+      className={cn("w-[85%] shrink-0 sm:w-[60%] md:w-[calc(50%-0.75rem)]", className)}
       {...props}
     />
   )
 }
 
-function CarouselPrevious({ className, label = "Previous slide", ...props }: React.ComponentProps<typeof Button> & { label?: string }) {
-  const { scrollPrev, canScrollPrev } = useCarousel()
-  return (
-    <Button
-      variant="outline"
-      size="icon-lg"
-      className={cn(
-        "absolute top-1/2 -left-4 z-10 -translate-y-1/2 rounded-full bg-background/90 backdrop-blur",
-        className
-      )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
-    >
-      <LuArrowLeft />
-      <span className="sr-only">{label}</span>
-    </Button>
-  )
-}
-
-function CarouselNext({ className, label = "Next slide", ...props }: React.ComponentProps<typeof Button> & { label?: string }) {
-  const { scrollNext, canScrollNext } = useCarousel()
-  return (
-    <Button
-      variant="outline"
-      size="icon-lg"
-      className={cn(
-        "absolute top-1/2 -right-4 z-10 -translate-y-1/2 rounded-full bg-background/90 backdrop-blur",
-        className
-      )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
-    >
-      <LuArrowRight />
-      <span className="sr-only">{label}</span>
-    </Button>
-  )
-}
-
-export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi }
+export { Carousel, CarouselItem }

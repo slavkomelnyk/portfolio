@@ -24,6 +24,7 @@ export type TechnologyIconEntry = {
 // Projects
 
 export type Stat = number | "github-stars" | "github-releases" | "obsidian-downloads";
+export type StatButton = "obsidian-download";
 export type ProjectId = (typeof projects)[number]["id"];
 
 export type Project = {
@@ -31,11 +32,18 @@ export type Project = {
   id: string;
   image: string;
   repo: string;
-  /** Link to the Obsidian community plugins page (optional). */
+  /**
+   * Obsidian plugin id (manifest.json), e.g. "camera-embed". Optional.
+   * The community plugins link, download stats and install button are all built from it.
+   */
   obsidian_marketplace?: string;
-  /** Plugin id from manifest.json; needed for "obsidian-downloads". */
-  obsidianId?: string;
-  stats?: { stars?: Stat; installs?: Stat; downloads?: Stat };
+  stats?: {
+    stars?: Stat;
+    installs?: Stat;
+    downloads?: Stat;
+    /** "obsidian-download" adds an "Install in Obsidian" button (needs `obsidian_marketplace`). */
+    button?: StatButton;
+  };
   tags: TechnologiesId[];
 };
 

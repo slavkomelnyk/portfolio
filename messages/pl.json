@@ -21,11 +21,10 @@
     "projectsTitle": "Moje projekty",
     "projectsLabel": "Moje projekty",
     "projectIconAlt": "Ikona projektu",
-    "carouselPrev": "Poprzedni projekt",
-    "carouselNext": "Następny projekt",
     "statStars": "Gwiazdki na GitHubie",
     "statInstalls": "Instalacje",
-    "statDownloads": "Pobrania"
+    "statDownloads": "Pobrania",
+    "installInObsidian": "Zainstaluj w Obsidian"
   },
   "projects": {
     "camera-embed": {
@@ -42,6 +41,11 @@
       "title": "Sklep w Django",
       "kind": "Aplikacja webowa",
       "description": "Prosty sklep internetowy dla dzieci stworzony w Django, wyposażony w system logowania, komentarzy i ocen oraz interfejs w Bootstrapie. Uruchamiany w Dockerze na serwerze Synology NAS."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "kind": "Aplikacja webowa",
+      "description": "Moja osobista strona portfolio zbudowana w Next.js, React, TypeScript, Tailwind CSS i shadcn/ui, hostowana na GitHub Pages."
     }
   },
   "statuses": {
@@ -71,8 +75,15 @@
     "android": "Oficjalna strona systemu Android",
     "synology": "Oficjalna strona Synology",
     "docker": "Oficjalna strona Dockera",
-    "html": "Oficjalna strona HTML",
+    "html": "Dokumentacja HTML",
     "nextjs": "Oficjalna strona Next.js",
-    "react": "Oficjalna strona React"
+    "react": "Oficjalna strona React",
+    "shadcn": "Dokumentacja shadcn/ui",
+    "github": "Oficjalna strona GitHub",
+    "githubpages": "Dokumentacja GitHub Pages",
+    "motion": "Dokumentacja Framer Motion",
+    "nextintl": "Dokumentacja NextIntl",
+    "reacticons": "Dokumentacja React Icons",
+    "css": "Dokumentacja Css"
   }
 }

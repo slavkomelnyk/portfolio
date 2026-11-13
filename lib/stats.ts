@@ -62,6 +62,12 @@ async function getJson<T>(url: string): Promise<T | null> {
 
 const repoSlug = (url: string) => url.match(/github\.com\/([^/]+\/[^/#?]+)/)?.[1]?.replace(/\.git$/, "");
 
+/** Obsidian plugin id: `obsidian_marketplace` if set, otherwise the repository name (the usual convention). */
+export const obsidianIdOf = (p: Project) => p.obsidian_marketplace ?? repoSlug(p.repo)?.split("/")[1];
+
+export const obsidianMarketplaceUrl = (id: string) =>
+  `https://community.obsidian.md/plugins/${encodeURIComponent(id)}`;
+
 type ObsidianStats = Record<string, { downloads?: number }>;
 let obsidianStats: Promise<ObsidianStats | null> | undefined;
 const getObsidianStats = () =>
@@ -71,8 +77,9 @@ const getObsidianStats = () =>
 
 async function load(stat: Exclude<Stat, number>, p: Project): Promise<number | null> {
   if (stat === "obsidian-downloads") {
-    if (!p.obsidianId) return null;
-    return (await getObsidianStats())?.[p.obsidianId]?.downloads ?? null;
+    const id = obsidianIdOf(p);
+    if (!id) return null;
+    return (await getObsidianStats())?.[id]?.downloads ?? null;
   }
 
   const slug = repoSlug(p.repo);
