@@ -207,7 +207,7 @@ export const TechnologyTones = {
 // Technologies displayed in the Tech Stack section
 export const techStack: TechnologiesId[] = [
   // Languages
-  "java",
+  // "java",
   "javascript",
   "kotlin",
   "python",
