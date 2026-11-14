@@ -27,13 +27,13 @@ export default function Projects() {
         {projects.map((p) => (
           <CarouselItem key={p.id}>
             <Card className="h-full rounded-3xl transition-transform duration-200 hover:scale-[1.02]">
-              <div className="mx-5 aspect-square max-h-56 self-center">
+              <div className="relative mx-auto aspect-square w-56 max-w-full overflow-hidden">
                 <NextImage
                   src={asset(p.image)}
                   alt={`${t("projectIconAlt")}: ${tp(`${p.id}.title` as never)}`}
-                  width={400}
-                  height={400}
-                  className="size-full object-contain"
+                  fill
+                  sizes="(max-width: 768px) 85vw, 224px"
+                  className="object-contain"
                 />
               </div>
               <CardHeader>
